@@ -40,21 +40,21 @@ class MainViewController: UITableViewController {
     // метод конфигурации ячейки (обязательный)
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
         // для того чтобы обратиться к числу инекса данной ячейки используется
         // метод indexPath.row, через него соответственно мы обращаемся по индексу
         // к массиву с наименованиями
-        cell.textLabel?.text = restaurantNames[indexPath.row]
-        cell.imageView?.image = UIImage(named: restaurantNames[indexPath.row]) 
+        cell.nameLabel?.text = restaurantNames[indexPath.row]
+        cell.imageOfPlace?.image = UIImage(named: restaurantNames[indexPath.row])
         
         // сделаем изображение груглым
         // для этого радиус скругления должен быть
         // равен половине высоты строки
         // первый метод скругляет только imageView в котором храниться
         // картинка, второй обрезает изобрадение по краям imageView
-        cell.imageView?.layer.cornerRadius = cell.frame.height/2
-        cell.imageView?.clipsToBounds = true
+        cell.imageOfPlace?.layer.cornerRadius = cell.imageOfPlace.frame.size.height/2
+        cell.imageOfPlace?.clipsToBounds = true
         return cell
     }
     
