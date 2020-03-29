@@ -48,7 +48,19 @@ class MainViewController: UITableViewController {
         cell.textLabel?.text = restaurantNames[indexPath.row]
         cell.imageView?.image = UIImage(named: restaurantNames[indexPath.row]) 
         
+        // сделаем изображение груглым
+        // для этого радиус скругления должен быть
+        // равен половине высоты строки
+        // первый метод скругляет только imageView в котором храниться
+        // картинка, второй обрезает изобрадение по краям imageView
+        cell.imageView?.layer.cornerRadius = cell.frame.height/2
+        cell.imageView?.clipsToBounds = true
         return cell
+    }
+    
+    // метод отвечающий за высоту строки
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 85
     }
     
 

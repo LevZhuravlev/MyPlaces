@@ -60,8 +60,8 @@
 				60AD6996242E5D8400E096F6 /* SceneDelegate.swift */,
 				60AD6998242E6FA000E096F6 /* MainViewController.swift */,
 				60FEC7C8242A5A7A001AC1A6 /* Main.storyboard */,
-				60FEC7CB242A5A7A001AC1A6 /* Assets.xcassets */,
 				60FEC7CD242A5A7A001AC1A6 /* LaunchScreen.storyboard */,
+				60FEC7CB242A5A7A001AC1A6 /* Assets.xcassets */,
 				60FEC7D0242A5A7A001AC1A6 /* Info.plist */,
 			);
 			path = MyPlaces;
