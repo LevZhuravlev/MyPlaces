@@ -6,7 +6,7 @@
 //  Copyright © 2020 Zhuravlev Lev. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // в качестве моделей данных обычно используют структуры, так как они
 // не требуют создание инициализаторов, потому что имеют встроенный
@@ -17,24 +17,11 @@ import Foundation
     
 struct Place {
     
-    // для начала делаем описание
-    // полей нашей модели исходя
-    // из внешнего вида нашего приложения
-    
     var name: String
-    var location: String
-    var type: String
-    var image: String
-    // картинка имеет тип строки так как
-    // к изображению мы обращаемся через имя файла
-    
-
-    // Лайфхак по генерации тестовых записей
-    // чтобы не делать тестовые записи в ручную
-    // просто автоматизируем этот процесс
-    
-    // Данный метод лучше сразу сделать статичным
-    // то есть методом всей стурктуры
+    var location: String?
+    var type: String?
+    var rest_image: String?
+    var image: UIImage?
 
 static let restaurantNames = [
 "Burger Heroes", "Kitchen", "Bonsai", "Дастархан",
@@ -53,7 +40,7 @@ static func getPlaces() -> [Place] {
     // и создавать элементы типа Place
     
     for place in restaurantNames {
-        places.append(Place(name: place, location: "Москва", type: "ресторан", image: place))
+        places.append(Place(name: place, location: "Москва", type: "ресторан", rest_image: place, image: nil))
     }
     
      
