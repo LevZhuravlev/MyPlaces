@@ -9,6 +9,8 @@
 import UIKit
 
 class NewPlaceViewController: UITableViewController {
+    
+    var newPlace: Place?
 
     @IBOutlet weak var placeImage: UIImageView!
     @IBOutlet weak var placeName: UITextField!
@@ -19,6 +21,23 @@ class NewPlaceViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
+        
+        // скрываем кнопку
+        saveButton.isEnabled = false
+        
+        // для того чтобы кнопка скрывалась или
+        // становилась доступной в зависимости от
+        // заполненности поля name реализуем метод
+        
+        placeName.addTarget(
+            self, // кем выполняется действие (в данном случае это будет наш класс)
+            action: #selector(textFieldChanged), // какое будет выполняться действие
+            for: .editingChanged) // когда оно будет выполняться
+        
+// то есть каждый раз при редактировани поля placeName будет срабатывать метод
+// .editingChanged, который в свою очередь будет вызывать метод textFieldChanged
+// который уже в свою очередь будет следить за тем заполнено ли текстовое поле
+// или нет, если будет заполненно то кнопка safe будет доступна иначе нет
 
     }
     
@@ -72,8 +91,22 @@ class NewPlaceViewController: UITableViewController {
             view.endEditing(true)}
     }
     
-    
+    func saveNewPlace() {
+        newPlace = Place(name: placeName.text!,
+                         location: placeLocation.text ,
+                         type: placeType.text,
+                         rest_image: nil,
+                         image: placeImage.image)
+
     }
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    
+    
+}
 
     
 // MARK: Text field delegate
@@ -91,6 +124,11 @@ class NewPlaceViewController: UITableViewController {
             return true
         }
         
+        @objc private func textFieldChanged() {
+            
+            if placeName.text?.isEmpty == false {
+                saveButton.isEnabled = true
+            } else {saveButton.isEnabled = false}}
         
         
     }
