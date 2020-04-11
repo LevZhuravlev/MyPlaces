@@ -17,4 +17,18 @@ import RealmSwift
 let realm = try! Realm()
 
 
-class StorageManager {}
+class StorageManager {
+    
+
+    // далее в нашем классе реализуем метод для сохранения объектов с типом Place
+    
+    static func saveObject(_ place: Place) {
+        
+        // сохраняем в базу данных
+        try! realm.write() {
+            realm.add(place)
+        }
+    }
+}
+
+

@@ -7,15 +7,14 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainViewController: UITableViewController {
     
     
     // Создаем перечень заведений
     
-
-    var places = Place.getPlaces()
-    
+    var places: Results<Place>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,49 +23,49 @@ class MainViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    // Этот метод возвращает количество строк для конкретной секции (обязательный)
-    // каждая строка имеет свой индекс и именно по ним можно обращаться к строкам
-    // соответственно для того чтобы проиндксировать все строки мы должны знать
-    // общее их количество, в итоге в этом методе нам надо вернуть какое то количество строк
+    // Количество строк
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Int(places.count)
     }
         
+    
+    
+    
     // метод конфигурации ячейки (обязательный)
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
-        
-        // для того чтобы обратиться к числу инекса данной ячейки используется
-        // метод indexPath.row, через него соответственно мы обращаемся по индексу
-        // к массиву с наименованиями
-        
-        // создадим переменную в которую поместим
-        // значение того какую ячейку мы выделели
-        
-        let place = places[indexPath.row]
-    
-        cell.nameLabel?.text = place.name
-        cell.locationLabel.text = place.location
-        cell.typeLabel.text = place.type
-        
-        if place.image == nil {
-            cell.imageOfPlace?.image = UIImage(named: place.name)
-        } else {cell.imageOfPlace?.image = place.image}
-        
-        
-        
-        // сделаем изображение груглым
-        // для этого радиус скругления должен быть
-        // равен половине высоты изображения
-        // первый метод скругляет только imageView в котором храниться
-        // картинка, второй обрезает изобрадение по краям imageView
-        
-        cell.imageOfPlace?.layer.cornerRadius = cell.imageOfPlace.frame.size.height/2
-        cell.imageOfPlace?.clipsToBounds = true
-        return cell
-    }
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
+//
+//        // для того чтобы обратиться к числу инекса данной ячейки используется
+//        // метод indexPath.row, через него соответственно мы обращаемся по индексу
+//        // к массиву с наименованиями
+//
+//        // создадим переменную в которую поместим
+//        // значение того какую ячейку мы выделели
+//
+//        let place = places[indexPath.row]
+//
+//        cell.nameLabel?.text = place.name
+//        cell.locationLabel.text = place.location
+//        cell.typeLabel.text = place.type
+//
+//        if place.image == nil {
+//            cell.imageOfPlace?.image = UIImage(named: place.name)
+//        } else {cell.imageOfPlace?.image = place.image}
+//
+//
+//
+//        // сделаем изображение груглым
+//        // для этого радиус скругления должен быть
+//        // равен половине высоты изображения
+//        // первый метод скругляет только imageView в котором храниться
+//        // картинка, второй обрезает изобрадение по краям imageView
+//
+//        cell.imageOfPlace?.layer.cornerRadius = cell.imageOfPlace.frame.size.height/2
+//        cell.imageOfPlace?.clipsToBounds = true
+//        return cell
+//    }
     
     // метод отвечающий за высоту строки
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -94,7 +93,7 @@ class MainViewController: UITableViewController {
         newPlaceVC.saveNewPlace()
         
         // добавляем в массив с элементами новый объект
-        places.append(newPlaceVC.newPlace!)
+//        places.append(newPlaceVC.newPlace!)
         
         // и обновляем данные
         tableView.reloadData()
