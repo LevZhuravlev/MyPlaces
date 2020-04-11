@@ -109,7 +109,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photo" translatesAutoresizingMaskIntoConstraints="NO" id="aM8-x4-07Z">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="280.00000000000006"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>

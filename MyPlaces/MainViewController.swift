@@ -14,7 +14,7 @@ class MainViewController: UITableViewController {
     // Создаем перечень заведений
     
 
-    let places = Place.getPlaces()
+    var places = Place.getPlaces()
     
 
     override func viewDidLoad() {
@@ -42,10 +42,20 @@ class MainViewController: UITableViewController {
         // метод indexPath.row, через него соответственно мы обращаемся по индексу
         // к массиву с наименованиями
         
-        cell.nameLabel?.text = places[indexPath.row].name
-        cell.imageOfPlace?.image = UIImage(named: places[indexPath.row].name)
-        cell.locationLabel.text = places[indexPath.row].location
-        cell.typeLabel.text = places[indexPath.row].type
+        // создадим переменную в которую поместим
+        // значение того какую ячейку мы выделели
+        
+        let place = places[indexPath.row]
+    
+        cell.nameLabel?.text = place.name
+        cell.locationLabel.text = place.location
+        cell.typeLabel.text = place.type
+        
+        if place.image == nil {
+            cell.imageOfPlace?.image = UIImage(named: place.name)
+        } else {cell.imageOfPlace?.image = place.image}
+        
+        
         
         // сделаем изображение груглым
         // для этого радиус скругления должен быть
@@ -65,11 +75,30 @@ class MainViewController: UITableViewController {
     
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue){
         
+        // для начала создадим экземпляр класса NewPlaceViewController
+        // (класса из которого будут приниматься данные в этот класс)
         
+        guard let newPlaceVC = segue.source as? NewPlaceViewController else {return}
         
-        
-    }
+        // передача данных происходит как в обычных segue, но только в обратном
+        // порядке. То есть если до этого был func prepare (for segue: ... )
+        // с методом segue.destination, потому что свойство destination мы
+        // используем для viewContrller'a получателя, когда мы хотим
+        // передать данные от viewContrller c которого переходим viewContrller'у
+        // на который мы переходим, сейчас же мы выполняем возврат с viewController'a
+        // на который мы переходили ранее, данный переход делает при помощи unwind segue
+        // и импользуется свойство sourse
 
+        // теперь вызываем сам метод
+        
+        newPlaceVC.saveNewPlace()
+        
+        // добавляем в массив с элементами новый объект
+        places.append(newPlaceVC.newPlace!)
+        
+        // и обновляем данные
+        tableView.reloadData()
+    }
 }
 
 
