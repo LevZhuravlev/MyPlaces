@@ -71,10 +71,10 @@
 		60FEC7C1242A5A7A001AC1A6 /* MyPlaces */ = {
 			isa = PBXGroup;
 			children = (
-				60C1E40B2441D9D000FE68AD /* StorageManager.swift */,
 				60FEC7C2242A5A7A001AC1A6 /* AppDelegate.swift */,
 				60AD6996242E5D8400E096F6 /* SceneDelegate.swift */,
 				60AD6998242E6FA000E096F6 /* MainViewController.swift */,
+				60C1E40B2441D9D000FE68AD /* StorageManager.swift */,
 				60C16AF324305E2200E62D8B /* PlaceModel.swift */,
 				60C16AF1243053AE00E62D8B /* CustomTableViewCell.swift */,
 				60343F9024389A2E005D9CD1 /* NewPlaceViewController.swift */,

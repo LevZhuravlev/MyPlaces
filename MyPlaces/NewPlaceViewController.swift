@@ -10,7 +10,6 @@ import UIKit
 
 class NewPlaceViewController: UITableViewController {
     
-    var newPlace = Place()
     var imageIsChanged = false
 
     @IBOutlet weak var placeImage: UIImageView!
@@ -96,21 +95,18 @@ class NewPlaceViewController: UITableViewController {
     
     func saveNewPlace() {
         
-        // добавляем свойство, которое
-        // будет отвечать за картинку
+        
         
         var image: UIImage?
-        
-        // и делаем условное присваевание
         if imageIsChanged {image = placeImage.image}
         else {image = #imageLiteral(resourceName: "imagePlaceholder")}
         
-//        newPlace = Place(name: placeName.text!,
-//                         location: placeLocation.text ,
-//                         type: placeType.text,
-//                         rest_image: nil,
-//                         image: image)
-
+        let newPlace = Place(name: placeName.text!,
+                             location: placeLocation.text,
+                             type: placeType.text,
+                             imageData: image?.pngData())
+        
+        StorageManager.saveObject(newPlace)
     }
     
     @IBAction func cancelAction(_ sender: Any) {
@@ -118,7 +114,7 @@ class NewPlaceViewController: UITableViewController {
     }
     
     
-    
+     
 }
 
     
