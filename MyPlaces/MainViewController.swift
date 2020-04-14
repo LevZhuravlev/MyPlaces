@@ -32,8 +32,6 @@ class MainViewController: UITableViewController {
     }
         
     
-    
-    
     // метод конфигурации ячейки (обязательный)
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -53,6 +51,36 @@ class MainViewController: UITableViewController {
         return cell
     }
     
+    // MARK: - Table view delegate
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        // данный метод является методом суперкласса
+        
+        // в теле метода определяем объект для удаления
+        // объект берем из массива places по индексу текущей строки
+        let place = places[indexPath.row]
+        
+        // теперь нам надо определить действие при свайпе
+        let deleteAction = UITableViewRowAction(
+            style: .default, // меню будет красное
+            title: "Delete") // название
+            { (_, _) in// логика работы
+                
+                // вызываем метод удаления объекта из базы
+                StorageManager.deleteObject(place)
+                
+                // вызываем метод удаления строки
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+        
+            }
+        
+        // возвращаем как элемент массива
+        return [deleteAction]
+    }
+    
+     
+    
     // метод отвечающий за высоту строки
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
@@ -71,8 +99,4 @@ class MainViewController: UITableViewController {
         tableView.reloadData()
     }
 }
-
-
-
-
 
