@@ -9,32 +9,41 @@
 import UIKit
 import RealmSwift
 
-class MainViewController: UITableViewController {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
-    // Создаем перечень заведений
+  
     
-    var places: Results<Place>!
+    
+    var places: Results<Place>! // Создаем перечень заведений
+    var ascendingSorting = true // Свойство для сортировки
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var reversedSortingButton: UIBarButtonItem!
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         places = realm.objects(Place.self)
-         
+        
     }
 
     // MARK: - Table view data source
 
     // Количество строк
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return places.isEmpty ? 0 : Int(places.count)
     }
         
     
     // метод конфигурации ячейки (обязательный)
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for:
             indexPath) as! CustomTableViewCell
@@ -53,7 +62,7 @@ class MainViewController: UITableViewController {
     
     // MARK: - Table view delegate
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         // данный метод является методом суперкласса
         
@@ -79,11 +88,34 @@ class MainViewController: UITableViewController {
         return [deleteAction]
     }
     
-     
     
     // метод отвечающий за высоту строки
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // условие того что мы идем по правильному сигвею
+        if segue.identifier == "showDetail" {
+            
+            // индекс строки
+            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+   
+            // извлекаем данные из массива по индексу
+            let place = places[indexPath.row]
+                
+            // извлекаем направление сигвея
+            let newPlaceVC = segue.destination as! NewPlaceViewController
+            
+            // и добираемся в классе NewPlaceViewController
+            // до свойства currentPlace
+            
+            newPlaceVC.currentPlace = place
+            // тем самым мы передали объект с типом Place из выбранной ячейки
+            // на NewPlaceViewController
+        }
     }
     
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue){
@@ -92,11 +124,47 @@ class MainViewController: UITableViewController {
         // (класса из которого будут приниматься данные в этот класс)
         
         guard let newPlaceVC = segue.source as? NewPlaceViewController else {return}
-        newPlaceVC.saveNewPlace()
+        newPlaceVC.savePlace()
         
         // добавляем в массив с элементами новый объект
         // и обновляем данные
         tableView.reloadData()
     }
+    
+    
+    // Action for SegmentedControl
+    @IBAction func sortSelection(_ sender: UISegmentedControl) {
+
+        sorting()
 }
+    
+      
+    @IBAction func reversedSorting(_ sender: UIBarButtonItem) {
+        
+        ascendingSorting.toggle()
+        
+        if ascendingSorting == true {
+            reversedSortingButton.image = #imageLiteral(resourceName: "AZ")
+        } else { reversedSortingButton.image = #imageLiteral(resourceName: "ZA") }
+        
+        sorting()
+        
+    }
+    
+    // далее прописываем логику ту же что и при выборе того или иного сегмента
+    // и чтобы не повторятся мы объявим отдельный приватный метод для сортировки
+    
+    private func sorting() {
+        
+         if segmentedControl.selectedSegmentIndex == 0 {
+                    places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
+                    } else { places = places.sorted(byKeyPath: "name", ascending: ascendingSorting) }
+                
+                tableView.reloadData()
+
+        }
+        
+    }
+    
+
 

@@ -11,7 +11,8 @@ import UIKit
 class NewPlaceViewController: UITableViewController {
     
     var imageIsChanged = false
-
+    var currentPlace:Place?
+ 
     @IBOutlet weak var placeImage: UIImageView!
     @IBOutlet weak var placeName: UITextField!
     @IBOutlet weak var placeLocation: UITextField!
@@ -19,14 +20,14 @@ class NewPlaceViewController: UITableViewController {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     override func viewDidLoad() {
-        
-        
+
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         
         // скрываем кнопку
         saveButton.isEnabled = false
         
+        setupEditScreen()
         // для того чтобы кнопка скрывалась или
         // становилась доступной в зависимости от
         // заполненности поля name реализуем метод
@@ -36,11 +37,6 @@ class NewPlaceViewController: UITableViewController {
             action: #selector(textFieldChanged), // какое будет выполняться действие
             for: .editingChanged) // когда оно будет выполняться
         
-// то есть каждый раз при редактировани поля placeName будет срабатывать метод
-// .editingChanged, который в свою очередь будет вызывать метод textFieldChanged
-// который уже в свою очередь будет следить за тем заполнено ли текстовое поле
-// или нет, если будет заполненно то кнопка safe будет доступна иначе нет
-
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -93,9 +89,7 @@ class NewPlaceViewController: UITableViewController {
             view.endEditing(true)}
     }
     
-    func saveNewPlace() {
-        
-        
+    func savePlace() {
         
         var image: UIImage?
         if imageIsChanged {image = placeImage.image}
@@ -106,10 +100,63 @@ class NewPlaceViewController: UITableViewController {
                              type: placeType.text,
                              imageData: image?.pngData())
         
-        StorageManager.saveObject(newPlace)
+        
+        // проверка на то добавили ли мы новое место
+        // или просто редактируем старое
+        
+        if currentPlace != nil {
+           
+            // далее обращаемся ко входу в базу
+            try! realm.write {
+                currentPlace?.name = newPlace.name
+                currentPlace?.location = newPlace.location
+                currentPlace?.type = newPlace.type
+                currentPlace?.imageData = newPlace.imageData
+            }
+        }
+        
+            // если же мы не редактируем старое то создаем новое
+        else {StorageManager.saveObject(newPlace)}
     }
     
-    @IBAction func cancelAction(_ sender: Any) {
+    private func setupEditScreen(){
+
+        // проверка на то что производиться редактирование
+        guard currentPlace != nil else { return }
+        
+        
+        // присваеваем значение полей для редактирования
+        placeName.text = currentPlace?.name
+        placeLocation.text = currentPlace?.location
+        placeType.text = currentPlace?.type
+        
+        // нада сделать так чтобы отображалась картинка
+        // так как из базы она извлекается с типом Data
+        // а в холдер она должна поступить с типом UIImage
+        
+        guard let data = currentPlace!.imageData,
+            let image = UIImage(data: data)
+            else {return}
+        placeImage.image = image
+        placeImage.contentMode = .scaleToFill
+        imageIsChanged = true
+
+        setNavigationBar()
+    }
+    
+    
+    private func setNavigationBar() {
+        
+        guard currentPlace != nil else { return }
+        navigationItem.leftBarButtonItem = nil
+        title = currentPlace?.name
+        saveButton.isEnabled = true
+            
+    }
+    
+    
+
+        @IBAction func cancelAction(_ sender: Any) {
         dismiss(animated: true)
     }
     
@@ -189,4 +236,5 @@ class NewPlaceViewController: UITableViewController {
                     imageIsChanged = true
                     dismiss(animated: true) 
                }}
+
 
