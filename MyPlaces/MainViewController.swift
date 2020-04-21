@@ -11,12 +11,18 @@ import RealmSwift
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
+    private let searchController = UISearchController(searchResultsController: nil)
+      // передавая в контроллер nil мы сообщаем ему что, мы хотим
+      // использовать для вывода результата тот же контроллер
   
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else {return false}
+        return text.isEmpty
+    }
     
-    
-    var places: Results<Place>! // Создаем перечень заведений
-    var ascendingSorting = true // Свойство для сортировки
+    private var places: Results<Place>! // Создаем перечень заведений
+    private var filteredPlaces: Results<Place>! // Создаем коллекцию для отфильтрованных заведений
+    private var ascendingSorting = true // Свойство для сортировки
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -30,8 +36,36 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         places = realm.objects(Place.self)
         
+        // setup SearchController
+        
+        // Свойство searchResultsUpdater (подписанное под UISearchResultsUpdating)
+        // Присваивая ему значение self, мы тем самым говорим, что получателем информации
+        // об изменении текста в поисковой строке должен быть наш класс
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        
+        // по умолчание searchController не позволяет никак взаимодействовать
+        // с отображаемым контентом и если отключить этот параметр, то это позволит
+        // взаимодействоать с этим viewController'ом также как и с основным
+        // то есть мы сможем переходить по записям, удалять или смотреть детали
+        
+        // далее присвоим название для нашей строки поиска
+        searchController.searchBar.placeholder = "search"
+        
+        // далее присвоим строку поиска объекту navigationItem
+        navigationItem.searchController = searchController
+        
+        
+        // то есть строка поиска у нас будет
+        // интергрированна в navigationBar
+        
+        // данное свойство позволяет отпустить строку поиска
+        // при переходе на другой экран
+        definesPresentationContext = true
+        
     }
-
+ 
     // MARK: - Table view data source
 
     // Количество строк
@@ -163,8 +197,25 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 tableView.reloadData()
 
         }
-        
     }
     
 
+// расширение с методами отвечающими за обновления таблицы
+// связанным с поиском данных
+
+extension MainViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    // метод отвечающий за поиск контента
+    // в качестве параметра принимает текст
+    // из строки поиска
+    private func filterContentForSearchText(_ searchText: String) {
+        filteredPlaces = places.filter("name CONTAINS[c] %@ OR locations CONTAINS[c] %@", searchText, searchText)
+        tableView.reloadData()
+        
+    }
+}
 
