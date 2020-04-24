@@ -27,7 +27,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photo" translatesAutoresizingMaskIntoConstraints="NO" id="aM8-x4-07Z">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="280.00000000000006"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -151,13 +151,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vc7-RN-s7A" customClass="RatingControl" customModule="MyPlaces" customModuleProvider="target">
-                                                    <rect key="frame" x="107" y="15" width="200" height="110"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="252" placeholderIntrinsicHeight="44" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vc7-RN-s7A" customClass="RatingControl" customModule="MyPlaces" customModuleProvider="target">
+                                                    <rect key="frame" x="81" y="48" width="252" height="44"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starCount">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="vc7-RN-s7A" firstAttribute="centerX" secondItem="tnF-qz-fwK" secondAttribute="centerX" id="Q2N-0F-Mg1"/>
-                                                <constraint firstItem="vc7-RN-s7A" firstAttribute="centerY" secondItem="tnF-qz-fwK" secondAttribute="centerY" id="tD5-rN-e4W"/>
+                                                <constraint firstItem="vc7-RN-s7A" firstAttribute="centerY" secondItem="tnF-qz-fwK" secondAttribute="centerY" id="BbO-d2-u4b"/>
+                                                <constraint firstItem="vc7-RN-s7A" firstAttribute="centerX" secondItem="tnF-qz-fwK" secondAttribute="centerX" id="MUt-Lj-doI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -192,7 +197,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ILX-Ig-gId" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="hlu-sx-xTh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1832" y="-3"/>
+            <point key="canvasLocation" x="1831.8840579710147" y="-3.3482142857142856"/>
         </scene>
         <!--My Places-->
         <scene sceneID="M7F-ib-WYH">
