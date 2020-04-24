@@ -22,8 +22,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     private var places: Results<Place>! // Создаем перечень заведений
     private var filteredPlaces: Results<Place>! // Создаем коллекцию для отфильтрованных заведений
+    private var isFiltering: Bool {
+        
+        // свойство отслежвающее работу поиска
+        return searchController.isActive && !searchBarIsEmpty
+    }
+
+
     private var ascendingSorting = true // Свойство для сортировки
-    
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var reversedSortingButton: UIBarButtonItem!
@@ -51,11 +58,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // то есть мы сможем переходить по записям, удалять или смотреть детали
         
         // далее присвоим название для нашей строки поиска
-        searchController.searchBar.placeholder = "search"
+        searchController.searchBar.placeholder = "Search"
         
         // далее присвоим строку поиска объекту navigationItem
         navigationItem.searchController = searchController
-        
         
         // то есть строка поиска у нас будет
         // интергрированна в navigationBar
@@ -71,6 +77,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Количество строк
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if isFiltering {
+            return filteredPlaces.count
+        }
         return places.isEmpty ? 0 : Int(places.count)
     }
         
@@ -82,7 +92,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for:
             indexPath) as! CustomTableViewCell
 
-        let place = places[indexPath.row]
+        var place = Place()
+        if isFiltering {place = filteredPlaces[indexPath.row]}
+        else {place = places[indexPath.row]}
 
         cell.nameLabel?.text = place.name
         cell.locationLabel.text = place.location
@@ -137,8 +149,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // индекс строки
             guard let indexPath = tableView.indexPathForSelectedRow else {return}
    
+            
             // извлекаем данные из массива по индексу
-            let place = places[indexPath.row]
+            
+            var place = Place()
+            if isFiltering {place = filteredPlaces[indexPath.row]}
+            else { place = places[indexPath.row] }
                 
             // извлекаем направление сигвея
             let newPlaceVC = segue.destination as! NewPlaceViewController
@@ -213,7 +229,7 @@ extension MainViewController: UISearchResultsUpdating {
     // в качестве параметра принимает текст
     // из строки поиска
     private func filterContentForSearchText(_ searchText: String) {
-        filteredPlaces = places.filter("name CONTAINS[c] %@ OR locations CONTAINS[c] %@", searchText, searchText)
+        filteredPlaces = places.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@ OR type CONTAINS[c] %@", searchText, searchText, searchText)
         tableView.reloadData()
         
     }
