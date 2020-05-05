@@ -11,18 +11,23 @@ import UIKit
 class NewPlaceViewController: UITableViewController {
     
     var imageIsChanged = false
-    var currentPlace:Place?
+    var currentPlace:Place!
  
     @IBOutlet weak var placeImage: UIImageView!
     @IBOutlet weak var placeName: UITextField!
     @IBOutlet weak var placeLocation: UITextField!
     @IBOutlet weak var placeType: UITextField!
+    @IBOutlet weak var ratingControl: RatingControl!
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        tableView.tableFooterView = UIView()
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, // задаем фрейм при помощи координат и размеров
+                                                         y: 0,
+                                                         width: tableView.frame.size.width,
+                                                                // ширина фрейма, табличного представления
+                                                         height: 1))
         
         // скрываем кнопку
         saveButton.isEnabled = false
@@ -98,7 +103,8 @@ class NewPlaceViewController: UITableViewController {
         let newPlace = Place(name: placeName.text!,
                              location: placeLocation.text,
                              type: placeType.text,
-                             imageData: image?.pngData())
+                             imageData: image?.pngData(),
+                             rating: Double(ratingControl.rating))
         
         
         // проверка на то добавили ли мы новое место
@@ -112,6 +118,7 @@ class NewPlaceViewController: UITableViewController {
                 currentPlace?.location = newPlace.location
                 currentPlace?.type = newPlace.type
                 currentPlace?.imageData = newPlace.imageData
+                currentPlace?.rating = newPlace.rating
             }
         }
         
@@ -142,10 +149,12 @@ class NewPlaceViewController: UITableViewController {
         imageIsChanged = true
 
         setNavigationBar()
+        ratingControl.rating = Int(currentPlace.rating)
+
     }
     
     
-    private func setNavigationBar() {
+    private func setNavigationBar() { 
         
         guard currentPlace != nil else { return }
         navigationItem.leftBarButtonItem = nil

@@ -12,14 +12,14 @@ import UIKit
 
     // MARK: Properties
     
+    // Текущее значение рейтинга
+    var rating = 0 {didSet {updateButtonSelectionState()}}
+    
     // размер звезды
     @IBInspectable var starSize: CGSize = CGSize(width: 44.0, height: 44.0) {didSet {setupButtons()}}
     
     // количество звезд
     @IBInspectable var starCount: Int = 5 {didSet {setupButtons()}}
-    
-    // Текущее значение рейтинга
-    var rating = 0
     
     // Массив кнопок
     private var ratingButtons = [UIButton]()
@@ -52,7 +52,21 @@ import UIKit
     // MARK: Button action
     
     @objc func ratingButtonTapped(button: UIButton) {
-        print("ButtonPressed 👍")
+        
+        // сначала мы узнаем индекс выбранной кнопки
+        guard let index = ratingButtons.firstIndex(of: button) else {return}
+        
+        // далее создаем свойство в котором
+        // будет указываться выбранный рейтинг
+        let selectedRating = index + 1
+        
+        // условие которое будет обнулять рейтинг
+        // если мы нажем на тот рейтинг который был
+        if selectedRating == rating {
+            rating = 0
+        } else {
+            rating = selectedRating
+        }
         
     }
     
@@ -74,21 +88,49 @@ import UIKit
         
     // Load button image
         
-         let filledStar = #imageLiteral(resourceName: <#T##String#>)
         
+        let bundle = Bundle(for: type(of: self))
+        // данный класс определяет местоположение ресурсов
+        // которые храняться в катологе assets нашего проекта
         
-        
-        
-        
+        // дальше для кажого свойства определяющего
+        // звезду прописываем местоположение
+        let filledStar = UIImage( named: "filledStar", // тут будет имя файла
+                                  in: bundle,          // местоположение файлов
+                                  compatibleWith: self.traitCollection)
+                                // используется для того чтобы убедиться в том,
+                                // что загружен правильный вариант изображения
+        let emptyStar = UIImage( named: "emptyStar", in: bundle, compatibleWith: self.traitCollection)
+        let highlightedStar = UIImage( named: "highlightedStar", in: bundle, compatibleWith: self.traitCollection)
         
         for _ in 0..<starCount {
             
            
     // Сreate the button
-        
         let button = UIButton()
-        button.backgroundColor = .red
-     
+
+    // Set the button Image
+            
+            button.setImage(emptyStar,   	// изображение кнопки
+                            for: .normal) 	// состояние кнопки
+                                            // .normal это обычное состояние
+                                            // кнопки, то есть когда с ней
+                                            // ничего не происходит
+            
+            button.setImage(filledStar,
+                            for: .selected) // выбрано
+            
+            button.setImage(highlightedStar, 	// состояние кнопки при
+                            for: .highlighted) 	// прикосновении к ней
+        
+            
+            // если звезда выделена и мы прикасаемся к ней
+            // тут мы будем использовать
+            // два состояния для кнопки
+            
+            button.setImage(highlightedStar,
+                            for: [.highlighted, .selected])
+            
     // Add constraints for button
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -118,8 +160,30 @@ import UIKit
     // Add new button in the rating button array
         ratingButtons.append(button)
     }
+        updateButtonSelectionState()
 
     }
-}
 
+    private func updateButtonSelectionState() {
+        
+        // при вызове данного метода
+        // мы будем выполнять итерацию по всем кнопкам и устанавливать
+        // состояние каждой из них в соответствии с индексом и рейтингом
+        // метод .enumerated() возвращает пару: объект и его индекс
+        
+        for (index, button) in ratingButtons.enumerated() {
+            
+            // затем мы возьмем каждую кнопку и присвоем для свойства кнопки
+            // isSelected логическое значение true или false
+            // в зависимости от значения index < rating
+            
+            button.isSelected = index < rating
+            
+            // то есть если если индекс кнопки будет меньше рейтинга
+            // то свойству .isSelected будет присвоен true и она она будет заполнена
+            // и все те которые меньше по индексу так как процесс происходит в цикле
+        }
+        
+    }
+}
  

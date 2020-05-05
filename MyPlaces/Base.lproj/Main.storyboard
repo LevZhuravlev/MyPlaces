@@ -27,7 +27,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photo" translatesAutoresizingMaskIntoConstraints="NO" id="aM8-x4-07Z">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="280.00000000000006"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -191,6 +191,7 @@
                         <outlet property="placeLocation" destination="sBi-X4-3GY" id="EES-9c-Uxv"/>
                         <outlet property="placeName" destination="HdS-lL-NXS" id="cS2-qI-U41"/>
                         <outlet property="placeType" destination="6gT-Ea-aXy" id="WGv-kp-TQG"/>
+                        <outlet property="ratingControl" destination="vc7-RN-s7A" id="54T-TM-tfN"/>
                         <outlet property="saveButton" destination="VwM-gT-OuC" id="yzs-O3-Os9"/>
                     </connections>
                 </tableViewController>
