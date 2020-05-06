@@ -23,6 +23,8 @@ import UIKit
     
     // Массив кнопок
     private var ratingButtons = [UIButton]()
+    
+    var isChanged = true
 
 
     
@@ -53,6 +55,8 @@ import UIKit
     
     @objc func ratingButtonTapped(button: UIButton) {
         
+        guard isChanged  else { return }
+        
         // сначала мы узнаем индекс выбранной кнопки
         guard let index = ratingButtons.firstIndex(of: button) else {return}
         
@@ -67,7 +71,6 @@ import UIKit
         } else {
             rating = selectedRating
         }
-        
     }
     
     

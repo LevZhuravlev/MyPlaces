@@ -103,6 +103,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         cell.imageOfPlace?.layer.cornerRadius = cell.imageOfPlace.frame.size.height/2
         cell.imageOfPlace?.clipsToBounds = true
+        cell.ratingStar.rating = Int(place.rating)
+        cell.ratingStar.isChanged = false
         return cell
     }
     
