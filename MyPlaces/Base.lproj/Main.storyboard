@@ -244,6 +244,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bE7-cO-Fz8"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="xLc-sf-NbX" id="2Gv-gx-pAv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dN0-Rp-zDs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -305,7 +308,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleAspectFill" placeholderIntrinsicWidth="252" placeholderIntrinsicHeight="44" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GRX-JZ-jbm" customClass="RatingControl" customModule="MyPlaces" customModuleProvider="target">
-                                                    <rect key="frame" x="309" y="35" width="95" height="15"/>
+                                                    <rect key="frame" x="309" y="20.666666666666671" width="95" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="95" id="KWW-cL-CoG"/>
                                                     </constraints>
