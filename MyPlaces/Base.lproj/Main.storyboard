@@ -200,6 +200,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapButton" destination="4bo-6T-3d5" id="chU-o1-Zve"/>
                         <outlet property="placeImage" destination="aM8-x4-07Z" id="Gzc-B6-bE8"/>
                         <outlet property="placeLocation" destination="sBi-X4-3GY" id="EES-9c-Uxv"/>
                         <outlet property="placeName" destination="HdS-lL-NXS" id="cS2-qI-U41"/>

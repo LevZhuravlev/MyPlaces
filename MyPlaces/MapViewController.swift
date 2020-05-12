@@ -8,13 +8,15 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapViewController: UIViewController {
     
-    @IBOutlet weak var mapView: MKMapView!
     var place = Place()
-     
     
+    
+    @IBOutlet weak var mapView: MKMapView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPlacemark()
@@ -76,6 +78,7 @@ class MapViewController: UIViewController {
             let annotation = MKPointAnnotation()
             annotation.title = self.place.name
             annotation.subtitle = self.place.type
+            annotation
             
             // привязываем аннотацию к точке на карте
             // сначала определяем местоположение маркера

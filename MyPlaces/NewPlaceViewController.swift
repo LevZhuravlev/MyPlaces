@@ -19,6 +19,7 @@ class NewPlaceViewController: UITableViewController {
     @IBOutlet weak var placeType: UITextField!
     @IBOutlet weak var ratingControl: RatingControl!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var mapButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -32,6 +33,7 @@ class NewPlaceViewController: UITableViewController {
         
         // скрываем кнопку
         saveButton.isEnabled = false
+        mapButton.isHidden = true
         
         setupEditScreen()
         // для того чтобы кнопка скрывалась или
@@ -41,6 +43,11 @@ class NewPlaceViewController: UITableViewController {
         placeName.addTarget(
             self, // кем выполняется действие (в данном случае это будет наш класс)
             action: #selector(textFieldChanged), // какое будет выполняться действие
+            for: .editingChanged) // когда оно будет выполняться
+        
+        placeLocation.addTarget(
+            self, // кем выполняется действие (в данном случае это будет наш класс)
+            action: #selector(MapFieldChanged), // какое будет выполняться действие
             for: .editingChanged) // когда оно будет выполняться
         
     }
@@ -154,12 +161,19 @@ class NewPlaceViewController: UITableViewController {
 
     }
     
+    private func setMapButton() {
+        
+        
+    }
+    
     private func setNavigationBar() { 
         
         guard currentPlace != nil else { return }
         navigationItem.leftBarButtonItem = nil
         title = currentPlace?.name
         saveButton.isEnabled = true
+        guard currentPlace.location != "" else { return }
+        mapButton.isHidden = false
             
     }
 
@@ -172,7 +186,11 @@ class NewPlaceViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier != "showMap" { return }
             let segueVC = segue.destination as! MapViewController
-                          segueVC.place = currentPlace
+        segueVC.place.name = placeName.text!
+        segueVC.place.location = placeLocation.text!
+        segueVC.place.type = placeType.text!
+        segueVC.place.imageData = placeImage.image?.pngData()
+
     }
 
 
@@ -202,8 +220,13 @@ class NewPlaceViewController: UITableViewController {
                 saveButton.isEnabled = true
             } else {saveButton.isEnabled = false}}
         
-        func textFieldDidChangeSelection(_ textField: UITextField) {
-             }
+        @objc private func MapFieldChanged() {
+            
+            if placeLocation.text?.isEmpty == false {
+                mapButton.isHidden = false
+            } else { mapButton.isHidden = true}}
+ 
+        
 }
 
 // MARK: Work With Image
