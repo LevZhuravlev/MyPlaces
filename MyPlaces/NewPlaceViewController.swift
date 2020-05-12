@@ -165,20 +165,18 @@ class NewPlaceViewController: UITableViewController {
     
     
 
-        @IBAction func cancelAction(_ sender: Any) {
-        dismiss(animated: true)
-    }
+    @IBAction func cancelAction(_ sender: Any) {
+    dismiss(animated: true)
+}
+
+    
+// MARK: Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier != "showMap" { return }
-        else {
             let segueVC = segue.destination as! MapViewController
-            segueVC.place = currentPlace!
-            
-            
-        }
+                          segueVC.place = currentPlace
     }
-     
 }
 
     
