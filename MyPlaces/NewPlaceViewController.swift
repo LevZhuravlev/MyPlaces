@@ -18,8 +18,9 @@ class NewPlaceViewController: UITableViewController {
     @IBOutlet weak var placeLocation: UITextField!
     @IBOutlet weak var placeType: UITextField!
     @IBOutlet weak var ratingControl: RatingControl!
-    
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -153,7 +154,6 @@ class NewPlaceViewController: UITableViewController {
 
     }
     
-    
     private func setNavigationBar() { 
         
         guard currentPlace != nil else { return }
@@ -162,24 +162,25 @@ class NewPlaceViewController: UITableViewController {
         saveButton.isEnabled = true
             
     }
-    
-    
 
     @IBAction func cancelAction(_ sender: Any) {
     dismiss(animated: true)
 }
 
-    
-// MARK: Navigation
+    // MARK: Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier != "showMap" { return }
             let segueVC = segue.destination as! MapViewController
                           segueVC.place = currentPlace
     }
-}
+
 
     
+}
+
+
+
 // MARK: Text field delegate
     
 // Для того чтобы поработать с клавиатурой
@@ -201,8 +202,9 @@ class NewPlaceViewController: UITableViewController {
                 saveButton.isEnabled = true
             } else {saveButton.isEnabled = false}}
         
-        
-    }
+        func textFieldDidChangeSelection(_ textField: UITextField) {
+             }
+}
 
 // MARK: Work With Image
 // это отдельное расширение класса в котором будет
@@ -251,5 +253,4 @@ class NewPlaceViewController: UITableViewController {
                     imageIsChanged = true
                     dismiss(animated: true) 
                }}
-
 
