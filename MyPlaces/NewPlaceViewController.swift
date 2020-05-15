@@ -184,7 +184,7 @@ class NewPlaceViewController: UITableViewController {
     // MARK: Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier != "showMap" { return }
+        if segue.identifier != "showPlace" { return }
             let segueVC = segue.destination as! MapViewController
         segueVC.place.name = placeName.text!
         segueVC.place.location = placeLocation.text!
@@ -192,9 +192,6 @@ class NewPlaceViewController: UITableViewController {
         segueVC.place.imageData = placeImage.image?.pngData()
 
     }
-
-
-    
 }
 
 

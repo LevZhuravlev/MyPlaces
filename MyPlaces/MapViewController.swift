@@ -13,22 +13,116 @@ import CoreLocation
 class MapViewController: UIViewController {
     
     var place = Place()
-    
+    var locationManager = CLLocationManager()
     
     @IBOutlet weak var mapView: MKMapView!
-
+    @IBOutlet weak var locationButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPlacemark()
+        checkLocationAutoriztion()
+        if (locationManager.location?.coordinate) != nil {}
+
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        checkLocationAutoriztion()
+
     }
     
-    
-    // метод закрытия окна
-    @IBAction func closeMap() {
-        dismiss(animated: true)
+    // метод проверяющий работу служб геолокации
+    private func checkLocationServices() {
+        
+        // за работу свойств геолокации отвечает метод
+        if CLLocationManager.locationServicesEnabled() {
+            
+            // этот метод возрващает булево значение
+            // если службы геолокации доступны,
+            // то в этой ветке будут выполняться
+            // первичные установки для дальнейшей работы
+            
+            setupLocationManager()
+            checkLocationAutoriztion()
+        }
+        
+        else {
+            
+            // эта ветка отвечает за работу alert
+            // контроллера, который будет объяснять
+            // пользователю как включить службы геолокации
+            
+            alertLocationAutorization()
+            
+        }
     }
     
+    // метод устанавливюий настройки геопозиции
+    private func setupLocationManager() {
+        
+        // Настроим точность определения местоположения
+        // пользователя с помощью свойства
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+    }
     
+    // метод проверяющий работу статуса служб геолокации
+    private func checkLocationAutoriztion() {
+        
+        // у класса CLLocationManager() есть метод
+        // "autoriztionStatus" который, возвращает различные
+        // состояния авторизации приложения, для служб геолокации
+        // всего таких состояний имеется 5 и надо обработать каждое из них
+        switch CLLocationManager.authorizationStatus(){
+            
+        case .authorizedWhenInUse:
+            // приложению разрешенно использовать
+            // геолокацию когда оно используется
+            
+            // будет отображать положение пользователя
+            mapView.showsUserLocation = true
+            break
+            
+        case .authorizedAlways:
+            // приложению разрешенно использовать
+            // геолокацию всегда
+            
+            // будет отображать положение пользователя
+            mapView.showsUserLocation = true
+            break
+        
+        case .denied:
+            // приложению отказанно
+            // использовать геолокацию
+            
+            alertLocationAutorization()
+
+            break
+        case .restricted:
+            // используется когда устройство
+            // не авторизованно для использования
+            // служб геолокации
+            
+            alertLocationAutorization()
+    
+            break
+        
+        case .notDetermined:
+            // статус не определен
+            
+            // будем запрашивать разрешение
+            // на использование
+            locationManager.requestWhenInUseAuthorization()
+            
+            // чтобы пользователь понимал зачем нам нужна
+            //  меняем настройки в Info.plist
+            break
+        
+        
+        @unknown default: print("all works")
+        }
+    }
+     
     // метод отображения метки на карте
     private func setupPlacemark() {
     
@@ -78,7 +172,7 @@ class MapViewController: UIViewController {
             let annotation = MKPointAnnotation()
             annotation.title = self.place.name
             annotation.subtitle = self.place.type
-            annotation
+            
             
             // привязываем аннотацию к точке на карте
             // сначала определяем местоположение маркера
@@ -96,6 +190,52 @@ class MapViewController: UIViewController {
             
         }
     }
+    
+    // метод открытия окна alert
+    private func alertLocationAutorization() {
+        
+        let alertController = UIAlertController(title: "Your location is not Avalable" , message: "Please go to Settings -> Privacy -> Location Services and Turn it ON", preferredStyle: .alert)
+        
+        let okButton = UIAlertAction(title: "OK", style: .default)
+        
+        alertController.addAction(okButton)
+        present(alertController, animated: true)
+        locationButton.isHidden = true}
+    
+    // метод определения местоположения
+    private func showUserLocation() {
+          // сначала проверим наличие координат пользователя
+            
+            checkLocationServices()
+            
+            if let location = locationManager.location?.coordinate {
+        
+                // если их получиться определить, то определяем
+                // регион для позиционирования карты
+                
+                let region = MKCoordinateRegion(center: location,
+                                                latitudinalMeters: 1000,
+                                                longitudinalMeters: 1000)
+                mapView.setRegion(region, animated: true)}
+    }
+    
+    // кнопка закрытия окна
+    @IBAction func closeMap() {
+        dismiss(animated: true)
+    }
+    
+    // кнопка определения местоположения
+    @IBAction func centerViewInUserLocation(_ sender: Any) {
+        showUserLocation()
+    }
+    
+    
+    
 }
 
 
+extension MapViewController:CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAutoriztion()
+    }
+}

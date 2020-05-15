@@ -37,7 +37,7 @@
                                                     </constraints>
                                                     <state key="normal" image="map"/>
                                                     <connections>
-                                                        <segue destination="Si5-nb-f8T" kind="presentation" identifier="showMap" modalPresentationStyle="fullScreen" id="RGk-Dh-clE"/>
+                                                        <segue destination="Si5-nb-f8T" kind="presentation" identifier="showPlace" modalPresentationStyle="fullScreen" id="RGk-Dh-clE"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -95,16 +95,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="fU2-0M-BQE">
-                                                    <rect key="frame" x="20" y="8" width="374" height="63"/>
+                                                    <rect key="frame" x="20" y="8" width="336" height="63"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpV-Ia-G6B">
-                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="34.333333333333336"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="336" height="34.333333333333336"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Place location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBi-X4-3GY">
-                                                            <rect key="frame" x="0.0" y="37.333333333333336" width="374" height="25.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="37.333333333333336" width="336" height="25.666666666666664"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
@@ -113,12 +113,25 @@
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k4n-Ds-yc3">
+                                                    <rect key="frame" x="364" y="45.666666666666664" width="30" height="24.999999999999993"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="5dR-23-jK4"/>
+                                                        <constraint firstAttribute="height" constant="25" id="oUD-QS-1j6"/>
+                                                    </constraints>
+                                                    <state key="normal" image="Placeholder"/>
+                                                    <connections>
+                                                        <segue destination="Si5-nb-f8T" kind="presentation" identifier="getAdress" modalPresentationStyle="fullScreen" id="Yhe-J7-lab"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="fU2-0M-BQE" secondAttribute="trailing" constant="20" id="C5y-5s-F7M"/>
+                                                <constraint firstItem="k4n-Ds-yc3" firstAttribute="leading" secondItem="fU2-0M-BQE" secondAttribute="trailing" constant="8" id="EjN-bR-4D6"/>
                                                 <constraint firstItem="fU2-0M-BQE" firstAttribute="leading" secondItem="9at-PB-Ug9" secondAttribute="leading" constant="20" id="ZG7-Xg-i8S"/>
                                                 <constraint firstAttribute="bottom" secondItem="fU2-0M-BQE" secondAttribute="bottom" constant="4" id="bYb-Bx-IH6"/>
                                                 <constraint firstItem="fU2-0M-BQE" firstAttribute="top" secondItem="9at-PB-Ug9" secondAttribute="top" constant="8" id="deX-se-p1h"/>
+                                                <constraint firstAttribute="trailing" secondItem="k4n-Ds-yc3" secondAttribute="trailing" constant="20" id="pTV-hJ-77i"/>
+                                                <constraint firstItem="k4n-Ds-yc3" firstAttribute="centerY" secondItem="sBi-X4-3GY" secondAttribute="centerY" id="rRF-r5-Gad"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -237,15 +250,29 @@
                                     <action selector="closeMap" destination="Si5-nb-f8T" eventType="touchUpInside" id="6GD-zB-qi7"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ly3-Oe-xi5">
+                                <rect key="frame" x="314" y="762" width="55" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="6fy-Ie-oFp"/>
+                                    <constraint firstAttribute="width" constant="55" id="ts8-J6-Sn4"/>
+                                </constraints>
+                                <state key="normal" image="navigation-2"/>
+                                <connections>
+                                    <action selector="centerViewInUserLocation:" destination="Si5-nb-f8T" eventType="touchUpInside" id="7yS-Xg-MjX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="bE7-cO-Fz8" firstAttribute="bottom" secondItem="Ly3-Oe-xi5" secondAttribute="bottom" constant="45" id="D54-9y-gks"/>
                             <constraint firstItem="bE7-cO-Fz8" firstAttribute="trailing" secondItem="nQr-v9-A0C" secondAttribute="trailing" constant="45" id="RSq-rY-0HW"/>
+                            <constraint firstItem="bE7-cO-Fz8" firstAttribute="trailing" secondItem="Ly3-Oe-xi5" secondAttribute="trailing" constant="45" id="atR-b9-NLS"/>
                             <constraint firstItem="nQr-v9-A0C" firstAttribute="top" secondItem="bE7-cO-Fz8" secondAttribute="top" constant="45" id="czS-f2-7Gb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bE7-cO-Fz8"/>
                     </view>
                     <connections>
+                        <outlet property="locationButton" destination="Ly3-Oe-xi5" id="gzG-6T-bid"/>
                         <outlet property="mapView" destination="xLc-sf-NbX" id="2Gv-gx-pAv"/>
                     </connections>
                 </viewController>
@@ -437,10 +464,13 @@
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="194.66667175292969" height="195.66667175292969"/>
+        <image name="Placeholder" width="22" height="22"/>
         <image name="camcel" width="128" height="128"/>
         <image name="map" width="50" height="50"/>
+        <image name="navigation-2" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="RGk-Dh-clE"/>
         <segue reference="eB5-z5-IY7"/>
     </inferredMetricsTieBreakers>
 </document>
