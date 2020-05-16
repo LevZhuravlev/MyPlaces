@@ -14,20 +14,25 @@ class MapViewController: UIViewController {
     
     var place = Place()
     var locationManager = CLLocationManager()
+    var incomeSegueIdentefier = ""
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var mapPinImage: UIImageView!
+    @IBOutlet weak var adressLabel: UILabel!
+    @IBOutlet weak var doneButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupPlacemark()
+        setupMapView()
         checkLocationAutoriztion()
         if (locationManager.location?.coordinate) != nil {}
 
     }
     override func viewDidAppear(_ animated: Bool) {
+        if (locationManager.location?.coordinate) != nil {}
         checkLocationAutoriztion()
-
+        setupMapView()
     }
     
     // метод проверяющий работу служб геолокации
@@ -80,7 +85,7 @@ class MapViewController: UIViewController {
             // геолокацию когда оно используется
             
             // будет отображать положение пользователя
-            mapView.showsUserLocation = true
+            if incomeSegueIdentefier == "getAdress" { mapView.showsUserLocation = true }
             break
             
         case .authorizedAlways:
@@ -88,7 +93,7 @@ class MapViewController: UIViewController {
             // геолокацию всегда
             
             // будет отображать положение пользователя
-            mapView.showsUserLocation = true
+            if incomeSegueIdentefier == "getAdress" { mapView.showsUserLocation = true }
             break
         
         case .denied:
@@ -122,7 +127,7 @@ class MapViewController: UIViewController {
         @unknown default: print("all works")
         }
     }
-     
+      
     // метод отображения метки на карте
     private func setupPlacemark() {
     
@@ -219,6 +224,17 @@ class MapViewController: UIViewController {
                 mapView.setRegion(region, animated: true)}
     }
     
+    // метод настройки отображения окна карты
+    private func setupMapView(){
+        if incomeSegueIdentefier == "showPlace" {
+            setupPlacemark()
+            mapPinImage.isHidden = true
+            adressLabel.isHidden = true
+            doneButton.isHidden = true
+        }
+        else if incomeSegueIdentefier == "getAdress" {showUserLocation()}
+    }
+    
     // кнопка закрытия окна
     @IBAction func closeMap() {
         dismiss(animated: true)
@@ -229,8 +245,8 @@ class MapViewController: UIViewController {
         showUserLocation()
     }
     
-    
-    
+    @IBAction func doneButtonPresed(_ sender: Any) {
+    }
 }
 
 

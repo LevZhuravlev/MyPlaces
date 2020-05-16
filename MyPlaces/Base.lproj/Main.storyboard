@@ -235,9 +235,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xLc-sf-NbX">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xLc-sf-NbX">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQr-v9-A0C">
                                 <rect key="frame" x="319" y="89" width="50" height="50"/>
@@ -261,18 +260,58 @@
                                     <action selector="centerViewInUserLocation:" destination="Si5-nb-f8T" eventType="touchUpInside" id="7yS-Xg-MjX"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pin" translatesAutoresizingMaskIntoConstraints="NO" id="VNV-kr-DCb">
+                                <rect key="frame" x="187" y="408" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="HmN-JE-hun"/>
+                                    <constraint firstAttribute="width" constant="40" id="pXT-XZ-iUY"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Adress " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qCY-Tt-0pY">
+                                <rect key="frame" x="20" y="215" width="374" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rb-mg-mSi">
+                                <rect key="frame" x="167" y="762" width="81" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="81" id="Iqr-ay-bTe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonPresed:" destination="Si5-nb-f8T" eventType="touchUpInside" id="P2m-hb-Cov"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="xLc-sf-NbX" secondAttribute="bottom" id="0gZ-MG-itr"/>
                             <constraint firstItem="bE7-cO-Fz8" firstAttribute="bottom" secondItem="Ly3-Oe-xi5" secondAttribute="bottom" constant="45" id="D54-9y-gks"/>
+                            <constraint firstItem="qCY-Tt-0pY" firstAttribute="leading" secondItem="bE7-cO-Fz8" secondAttribute="leading" constant="20" id="Eyg-SE-s3i"/>
+                            <constraint firstItem="bE7-cO-Fz8" firstAttribute="trailing" secondItem="qCY-Tt-0pY" secondAttribute="trailing" constant="20" id="HWe-JC-jAS"/>
+                            <constraint firstItem="xLc-sf-NbX" firstAttribute="leading" secondItem="bE7-cO-Fz8" secondAttribute="leading" id="QYb-x1-XA6"/>
                             <constraint firstItem="bE7-cO-Fz8" firstAttribute="trailing" secondItem="nQr-v9-A0C" secondAttribute="trailing" constant="45" id="RSq-rY-0HW"/>
                             <constraint firstItem="bE7-cO-Fz8" firstAttribute="trailing" secondItem="Ly3-Oe-xi5" secondAttribute="trailing" constant="45" id="atR-b9-NLS"/>
+                            <constraint firstItem="5rb-mg-mSi" firstAttribute="top" secondItem="xLc-sf-NbX" secondAttribute="bottom" constant="-134" id="bfA-ah-2F5"/>
                             <constraint firstItem="nQr-v9-A0C" firstAttribute="top" secondItem="bE7-cO-Fz8" secondAttribute="top" constant="45" id="czS-f2-7Gb"/>
+                            <constraint firstItem="xLc-sf-NbX" firstAttribute="trailing" secondItem="bE7-cO-Fz8" secondAttribute="trailing" id="gEF-0B-pqv"/>
+                            <constraint firstItem="VNV-kr-DCb" firstAttribute="centerY" secondItem="bM5-lS-yWX" secondAttribute="centerY" constant="-20" id="gZt-RZ-iJu"/>
+                            <constraint firstItem="5rb-mg-mSi" firstAttribute="leading" secondItem="xLc-sf-NbX" secondAttribute="trailing" constant="-247" id="m5Y-9T-ke4"/>
+                            <constraint firstItem="VNV-kr-DCb" firstAttribute="centerX" secondItem="bM5-lS-yWX" secondAttribute="centerX" id="qA9-gy-BcA"/>
+                            <constraint firstItem="xLc-sf-NbX" firstAttribute="top" secondItem="qCY-Tt-0pY" secondAttribute="bottom" constant="-251" id="qma-bB-xDt"/>
+                            <constraint firstItem="xLc-sf-NbX" firstAttribute="top" secondItem="bM5-lS-yWX" secondAttribute="top" id="yl5-am-AjG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bE7-cO-Fz8"/>
                     </view>
                     <connections>
+                        <outlet property="adressLabel" destination="qCY-Tt-0pY" id="69t-m1-Xc8"/>
+                        <outlet property="doneButton" destination="5rb-mg-mSi" id="te6-4G-keO"/>
                         <outlet property="locationButton" destination="Ly3-Oe-xi5" id="gzG-6T-bid"/>
+                        <outlet property="mapPinImage" destination="VNV-kr-DCb" id="eKX-Kf-5bc"/>
                         <outlet property="mapView" destination="xLc-sf-NbX" id="2Gv-gx-pAv"/>
                     </connections>
                 </viewController>
@@ -336,7 +375,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleAspectFill" placeholderIntrinsicWidth="252" placeholderIntrinsicHeight="44" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GRX-JZ-jbm" customClass="RatingControl" customModule="MyPlaces" customModuleProvider="target">
-                                                    <rect key="frame" x="309" y="35" width="95" height="15"/>
+                                                    <rect key="frame" x="309" y="20.666666666666671" width="95" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="95" id="KWW-cL-CoG"/>
                                                     </constraints>
@@ -464,7 +503,8 @@
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="194.66667175292969" height="195.66667175292969"/>
-        <image name="Placeholder" width="22" height="22"/>
+        <image name="Pin" width="40" height="40"/>
+        <image name="Placeholder" width="20" height="20"/>
         <image name="camcel" width="128" height="128"/>
         <image name="map" width="50" height="50"/>
         <image name="navigation-2" width="128" height="128"/>
