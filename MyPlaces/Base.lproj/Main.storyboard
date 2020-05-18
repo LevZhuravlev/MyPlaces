@@ -308,7 +308,7 @@
                         <viewLayoutGuide key="safeArea" id="bE7-cO-Fz8"/>
                     </view>
                     <connections>
-                        <outlet property="adressLabel" destination="qCY-Tt-0pY" id="69t-m1-Xc8"/>
+                        <outlet property="addressLabel" destination="qCY-Tt-0pY" id="69t-m1-Xc8"/>
                         <outlet property="doneButton" destination="5rb-mg-mSi" id="te6-4G-keO"/>
                         <outlet property="locationButton" destination="Ly3-Oe-xi5" id="gzG-6T-bid"/>
                         <outlet property="mapPinImage" destination="VNV-kr-DCb" id="eKX-Kf-5bc"/>
