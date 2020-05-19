@@ -189,6 +189,7 @@ class NewPlaceViewController: UITableViewController {
             else { return }
         
         segueVC.incomeSegueIdentefier = identefier
+        segueVC.mapViewControllerDelegate = self
         
         if identefier == "showPlace" {
             segueVC.place.name = placeName.text!
@@ -278,4 +279,11 @@ class NewPlaceViewController: UITableViewController {
                     imageIsChanged = true
                     dismiss(animated: true) 
                }}
+
+// метод отображения в поле location данных с карты
+    extension NewPlaceViewController: MapViewControllerDelegate {
+        func getAddress(_ address: String?) {
+            placeLocation.text = address
+        }
+}
 

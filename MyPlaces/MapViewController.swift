@@ -20,14 +20,14 @@ class MapViewController: UIViewController {
     var annotationIdentefier = "annotationIdentefier"
     var locationManager = CLLocationManager()
     var incomeSegueIdentefier = ""
-    
-    
+    var mapViewControllerDelegate: MapViewControllerDelegate?
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var mapPinImage: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var goButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -223,6 +223,7 @@ class MapViewController: UIViewController {
             checkLocationServices()
             
             if let location = locationManager.location?.coordinate {
+                
         
                 // если их получиться определить, то определяем
                 // регион для позиционирования карты
@@ -270,7 +271,15 @@ class MapViewController: UIViewController {
         showUserLocation()
     }
     
+    // кнопка сохранения указзанной локации
     @IBAction func doneButtonPresed(_ sender: Any) {
+        mapViewControllerDelegate?.getAddress(addressLabel.text)
+        dismiss(animated: true)
+    }
+    
+    // кнопка прокладки маршрута
+    @IBAction func goButtonPressed() {
+        print("goButtonPressed")
     }
 }
 
