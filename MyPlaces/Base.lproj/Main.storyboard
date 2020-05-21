@@ -298,6 +298,31 @@
                                     <action selector="closeMap" destination="Si5-nb-f8T" eventType="touchUpInside" id="6GD-zB-qi7"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time to place" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LUx-PQ-EgI">
+                                <rect key="frame" x="20" y="703" width="236" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IIO-lL-xGu">
+                                <rect key="frame" x="20" y="774" width="236" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="On car"/>
+                                    <segment title="On foot"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onCarOnFoot:" destination="Si5-nb-f8T" eventType="valueChanged" id="Xz8-6I-sxa"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distance to place" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dZt-0b-gLo">
+                                <rect key="frame" x="20" y="738" width="236" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -323,11 +348,14 @@
                     </view>
                     <connections>
                         <outlet property="addressLabel" destination="qCY-Tt-0pY" id="69t-m1-Xc8"/>
+                        <outlet property="distanceToPlace" destination="dZt-0b-gLo" id="1oN-TR-XY8"/>
                         <outlet property="doneButton" destination="5rb-mg-mSi" id="te6-4G-keO"/>
                         <outlet property="goButton" destination="CCY-rq-iub" id="UZj-nw-uUS"/>
                         <outlet property="locationButton" destination="Ly3-Oe-xi5" id="gzG-6T-bid"/>
                         <outlet property="mapPinImage" destination="VNV-kr-DCb" id="eKX-Kf-5bc"/>
                         <outlet property="mapView" destination="xLc-sf-NbX" id="2Gv-gx-pAv"/>
+                        <outlet property="onCarOrOnFootSegment" destination="IIO-lL-xGu" id="aMQ-ce-V3s"/>
+                        <outlet property="timeToPlace" destination="LUx-PQ-EgI" id="APZ-XJ-Fsj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dN0-Rp-zDs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
