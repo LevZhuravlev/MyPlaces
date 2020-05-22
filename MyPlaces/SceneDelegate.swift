@@ -1,8 +1,8 @@
 //
-//  SceneDelegate.swift
+//  UViewController.swift
 //  MyPlaces
 //
-//  Created by Zhuravlev Lev on 24/03/2020.
+//  Created by Zhuravlev Lev on 27/03/2020.
 //  Copyright © 2020 Zhuravlev Lev. All rights reserved.
 //
 
