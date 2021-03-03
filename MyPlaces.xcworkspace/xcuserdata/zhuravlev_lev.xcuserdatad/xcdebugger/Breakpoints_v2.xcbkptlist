@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9FC931F4-DEBD-4723-B073-34D8E4F5C8DC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MyPlaces/NewPlaceViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "savePlace()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "16750A9F-A386-42EB-A9C8-CCCFFB64D033"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -30,8 +14,8 @@
             filePath = "MyPlaces/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +30,8 @@
             filePath = "MyPlaces/NewPlaceViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -68,7 +52,7 @@
             landmarkType = "0">
             <Locations>
                <Location
-                  uuid = "D4BF008E-A798-4FBA-BE50-D3B31E8227DB - c71038186e253447"
+                  uuid = "D4BF008E-A798-4FBA-BE50-D3B31E8227DB - 84a64e54645d2d87"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -83,7 +67,7 @@
                   offsetFromSymbolStart = "4">
                </Location>
                <Location
-                  uuid = "D4BF008E-A798-4FBA-BE50-D3B31E8227DB - 3da2cb684398afb4"
+                  uuid = "D4BF008E-A798-4FBA-BE50-D3B31E8227DB - 7e14bd2449e0b427"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -98,7 +82,7 @@
                   offsetFromSymbolStart = "69">
                </Location>
                <Location
-                  uuid = "D4BF008E-A798-4FBA-BE50-D3B31E8227DB - 1eec88614c9332f4"
+                  uuid = "D4BF008E-A798-4FBA-BE50-D3B31E8227DB - 5d5afe2d46eb2b34"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -113,7 +97,7 @@
                   offsetFromSymbolStart = "16">
                </Location>
                <Location
-                  uuid = "D4BF008E-A798-4FBA-BE50-D3B31E8227DB - 87e7fdb26c1f42ac"
+                  uuid = "D4BF008E-A798-4FBA-BE50-D3B31E8227DB - c4518bfe6667593f"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -142,8 +126,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "19"
             endingLineNumber = "19"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -158,8 +142,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "22"
             endingLineNumber = "22"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -174,8 +158,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "23"
             endingLineNumber = "23"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -204,8 +188,8 @@
             filePath = "MyPlaces/MapViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "519"
-            endingLineNumber = "519"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
             landmarkName = "mapView(_:regionDidChangeAnimated:)"
             landmarkType = "7">
          </BreakpointContent>

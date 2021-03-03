@@ -25,57 +25,26 @@ class NewPlaceViewController: UITableViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, // задаем фрейм при помощи координат и размеров
-                                                         y: 0,
-                                                         width: tableView.frame.size.width,
-                                                                // ширина фрейма, табличного представления
-                                                         height: 1))
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         
-        // скрываем кнопку
         saveButton.isEnabled = false
         mapButton.isHidden = true
-        
+    
         setupEditScreen()
-        // для того чтобы кнопка скрывалась или
-        // становилась доступной в зависимости от
-        // заполненности поля name реализуем метод
+        placeName.addTarget( self, action: #selector(textFieldChanged), for: .editingChanged)
         
-        placeName.addTarget(
-            self, // кем выполняется действие (в данном случае это будет наш класс)
-            action: #selector(textFieldChanged), // какое будет выполняться действие
-            for: .editingChanged) // когда оно будет выполняться
-        
-        placeLocation.addTarget(
-            self, // кем выполняется действие (в данном случае это будет наш класс)
-            action: #selector(MapFieldChanged), // какое будет выполняться действие
-            for: .editingChanged) // когда оно будет выполняться
-        
-    }
+        placeLocation.addTarget( self, action: #selector(MapFieldChanged), for: .editingChanged)}
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // тут мы проверяем на какую ячейку было нажатие
         if indexPath.row == 0 {
-            
-            // изображения alertController
-            
             let cameraIcon = #imageLiteral(resourceName: "camera")
             let photoIcon = #imageLiteral(resourceName: "photo")
-            
-            // открытие alertController
-            
-            let actionSheet = UIAlertController(title: nil,
-                                                message: nil,
-                                                preferredStyle: UIAlertController.Style.actionSheet)
+            let actionSheet = UIAlertController(title: nil, message: nil,preferredStyle: UIAlertController.Style.actionSheet)
             
             let camera = UIAlertAction(title: "Camera", style: .default)
-            { _ in self.chooseImagePicker(source: .camera)}			// логика вызова камеры
-            
-            
-            // образаемся к объекту камера и вызываем метод setValue
-            // он позволяет установить значение любого типа
-            // по определенному ключу
-            
+            { _ in self.chooseImagePicker(source: .camera)}
+                        
             camera.setValue(cameraIcon, forKey: "image")
             camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
            
@@ -85,7 +54,6 @@ class NewPlaceViewController: UITableViewController {
             photo.setValue(photoIcon, forKey: "image")
             photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
-            
             
             let cancel = UIAlertAction(title: "Cancel", style: .cancel)
             
@@ -97,8 +65,6 @@ class NewPlaceViewController: UITableViewController {
         }
             
         else {
-            // а тут мы будем просто
-            // скрывать при тапе на другие ячейки
             view.endEditing(true)}
     }
     
@@ -113,14 +79,10 @@ class NewPlaceViewController: UITableViewController {
                              type: placeType.text,
                              imageData: image?.pngData(),
                              rating: Double(ratingControl.rating))
-        
-        
-        // проверка на то добавили ли мы новое место
-        // или просто редактируем старое
+    
         
         if currentPlace != nil {
            
-            // далее обращаемся ко входу в базу
             try! realm.write {
                 currentPlace?.name = newPlace.name
                 currentPlace?.location = newPlace.location
@@ -130,24 +92,18 @@ class NewPlaceViewController: UITableViewController {
             }
         }
         
-            // если же мы не редактируем старое то создаем новое
         else {StorageManager.saveObject(newPlace)}
     }
     
     private func setupEditScreen(){
 
-        // проверка на то что производиться редактирование
         guard currentPlace != nil else { return }
         
         
-        // присваеваем значение полей для редактирования
         placeName.text = currentPlace?.name
         placeLocation.text = currentPlace?.location
         placeType.text = currentPlace?.type
         
-        // нада сделать так чтобы отображалась картинка
-        // так как из базы она извлекается с типом Data
-        // а в холдер она должна поступить с типом UIImage
         
         guard let data = currentPlace!.imageData,
             let image = UIImage(data: data)
@@ -201,17 +157,11 @@ class NewPlaceViewController: UITableViewController {
 }
 
 
-
 // MARK: Text field delegate
-    
-// Для того чтобы поработать с клавиатурой
-// нам необходимо подписаться под протокол UITextFieldDelegate
+
 
     extension NewPlaceViewController: UITextFieldDelegate {
-        
-        // скрываем клавиаутуру по нажатию на done
-        // и делать мы это будем в методе
-        
+
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             textField.resignFirstResponder()
             return true
@@ -221,64 +171,50 @@ class NewPlaceViewController: UITableViewController {
             
             if placeName.text?.isEmpty == false {
                 saveButton.isEnabled = true
-            } else {saveButton.isEnabled = false}}
+            } else {
+                saveButton.isEnabled = false
+            }
+        }
         
         @objc private func MapFieldChanged() {
             
             if placeLocation.text?.isEmpty == false {
                 mapButton.isHidden = false
-            } else { mapButton.isHidden = true}}
+            } else {
+                mapButton.isHidden = true
+            }
+        }
  
         
 }
 
 // MARK: Work With Image
-// это отдельное расширение класса в котором будет
-// реализовываться метод открытия фото
 
     extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        
-        // метод открытия изображения
-        // у него будет параметр, через который
-        // будет определяться источник выбора изображения
-        // (фото или камера)
-        
+   
         func chooseImagePicker(source: UIImagePickerController.SourceType) {
-            
-            // первое что мы делаем в методе это проверяем
-            // на доступность источника выбора изображения
             
             if UIImagePickerController.isSourceTypeAvailable(source){
                 
-                // если он доступен до создаем экземпляр этого класса
                 let imagePicker = UIImagePickerController()
                 
-               imagePicker.delegate = self
-
-                // далее реализуем метод позволяющий
-                // редактировать выбранное изображение
+                imagePicker.delegate = self
                 imagePicker.allowsEditing = true
-                
-                // определяем тип источника для выбранного изображения
                 imagePicker.sourceType = source
+                present(imagePicker, animated: true)
+            }
+        }
                 
-                // далее его нам надо отобразить
-                present(imagePicker, animated: true)    }
-                 }
-                
-            // для того чтобы назначить OutLet'у изображение
-            // в классе UIImagePickerControllerDelegate в
-            // на который мы подписались необходимо
-            // выполнить метод
                 
                 func imagePickerController(_ picker: UIImagePickerController,
                                            didFinishPickingMediaWithInfo info : [UIImagePickerController.InfoKey: Any]) {
-                    placeImage.image = info[.editedImage] as? UIImage // работа с выбранным по ключу изображением
-                    placeImage.contentMode = .scaleAspectFill // заполнение в нужной ячейке
-                    placeImage.clipsToBounds = true // обрезка выбранного изображения
+                    placeImage.image = info[.editedImage] as? UIImage
+                    placeImage.contentMode = .scaleAspectFill
+                    placeImage.clipsToBounds = true
                     imageIsChanged = true
                     dismiss(animated: true) 
-               }}
+               }
+    }
 
 // метод отображения в поле location данных с карты
     extension NewPlaceViewController: MapViewControllerDelegate {

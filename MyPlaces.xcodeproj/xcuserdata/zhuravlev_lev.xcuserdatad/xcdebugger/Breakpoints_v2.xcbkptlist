@@ -41,14 +41,14 @@
          <BreakpointContent
             uuid = "8F5B4994-79E0-4A76-9F21-6A6AD0A3CB8E"
             shouldBeEnabled = "No"
-            ignoreCount = "0"
             condition = "&#xa7;"
+            ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyPlaces/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "MainViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -63,8 +63,8 @@
             filePath = "MyPlaces/NewPlaceViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>

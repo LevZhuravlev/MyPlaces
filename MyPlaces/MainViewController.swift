@@ -12,20 +12,17 @@ import RealmSwift
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let searchController = UISearchController(searchResultsController: nil)
-      // передавая в контроллер nil мы сообщаем ему что, мы хотим
-      // использовать для вывода результата тот же контроллер
+      
   
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else {return false}
         return text.isEmpty
     }
     
-    private var places: Results<Place>! // Создаем перечень заведений
-    private var filteredPlaces: Results<Place>! // Создаем коллекцию для отфильтрованных заведений
+    private var places: Results<Place>!
+    private var filteredPlaces: Results<Place>! 
     private var isFiltering: Bool {
-        
-        // свойство отслежвающее работу поиска
-        return searchController.isActive && !searchBarIsEmpty
+                return searchController.isActive && !searchBarIsEmpty
     }
 
 
@@ -42,12 +39,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         
         places = realm.objects(Place.self)
-        
-        // setup SearchController
-        
-        // Свойство searchResultsUpdater (подписанное под UISearchResultsUpdating)
-        // Присваивая ему значение self, мы тем самым говорим, что получателем информации
-        // об изменении текста в поисковой строке должен быть наш класс
+    
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -57,24 +49,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // взаимодействоать с этим viewController'ом также как и с основным
         // то есть мы сможем переходить по записям, удалять или смотреть детали
         
-        // далее присвоим название для нашей строки поиска
+
         searchController.searchBar.placeholder = "Search"
-        
-        // далее присвоим строку поиска объекту navigationItem
         navigationItem.searchController = searchController
-        
-        // то есть строка поиска у нас будет
-        // интергрированна в navigationBar
-        
-        // данное свойство позволяет отпустить строку поиска
-        // при переходе на другой экран
         definesPresentationContext = true
         
     }
  
     // MARK: - Table view data source
 
-    // Количество строк
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -84,9 +67,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return places.isEmpty ? 0 : Int(places.count)
     }
         
-    
-    // метод конфигурации ячейки (обязательный)
-    
+        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for:
@@ -116,27 +97,20 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        // данный метод является методом суперкласса
-        
-        // в теле метода определяем объект для удаления
-        // объект берем из массива places по индексу текущей строки
+     
         let place = places[indexPath.row]
         
-        // теперь нам надо определить действие при свайпе
+       
         let deleteAction = UITableViewRowAction(
             style: .default, // меню будет красное
             title: "Delete") // название
             { (_, _) in// логика работы
                 
-                // вызываем метод удаления объекта из базы
                 StorageManager.deleteObject(place)
-                
-                // вызываем метод удаления строки
                 tableView.deleteRows(at: [indexPath], with: .automatic)
         
             }
         
-        // возвращаем как элемент массива
         return [deleteAction]
     }
     
@@ -164,60 +138,42 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
             // извлекаем направление сигвея
             let newPlaceVC = segue.destination as! NewPlaceViewController
-            
-            // и добираемся в классе NewPlaceViewController
-            // до свойства currentPlace
-            
             newPlaceVC.currentPlace = place
-            // тем самым мы передали объект с типом Place из выбранной ячейки
-            // на NewPlaceViewController
         }
     }
     
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue){
-        
-        // для начала создадим экземпляр класса NewPlaceViewController
-        // (класса из которого будут приниматься данные в этот класс)
+   
         
         guard let newPlaceVC = segue.source as? NewPlaceViewController else {return}
         newPlaceVC.savePlace()
-        
-        // добавляем в массив с элементами новый объект
-        // и обновляем данные
         tableView.reloadData()
     }
     
     
     // Action for SegmentedControl
     @IBAction func sortSelection(_ sender: UISegmentedControl) {
-
         sorting()
 }
     
       
     @IBAction func reversedSorting(_ sender: UIBarButtonItem) {
-        
         ascendingSorting.toggle()
-        
         if ascendingSorting == true {
             reversedSortingButton.image = #imageLiteral(resourceName: "AZ")
-        } else { reversedSortingButton.image = #imageLiteral(resourceName: "ZA") }
-        
+        } else {
+            reversedSortingButton.image = #imageLiteral(resourceName: "ZA")
+        }
         sorting()
         
     }
     
-    // далее прописываем логику ту же что и при выборе того или иного сегмента
-    // и чтобы не повторятся мы объявим отдельный приватный метод для сортировки
-    
+
     private func sorting() {
-        
          if segmentedControl.selectedSegmentIndex == 0 {
                     places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
                     } else { places = places.sorted(byKeyPath: "name", ascending: ascendingSorting) }
-                
                 tableView.reloadData()
-
         }
     }
     
@@ -231,13 +187,9 @@ extension MainViewController: UISearchResultsUpdating {
         filterContentForSearchText(searchController.searchBar.text!)
     }
     
-    // метод отвечающий за поиск контента
-    // в качестве параметра принимает текст
-    // из строки поиска
     private func filterContentForSearchText(_ searchText: String) {
         filteredPlaces = places.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@ OR type CONTAINS[c] %@", searchText, searchText, searchText)
         tableView.reloadData()
-        
     }
 }
 
